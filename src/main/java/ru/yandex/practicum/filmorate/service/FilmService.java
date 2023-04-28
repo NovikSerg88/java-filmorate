@@ -22,7 +22,6 @@ public class FilmService {
         return id++;
     }
 
-
     public Film addFilm(Film film) {
         if (films.containsKey(film.getId())) {
             throw new ValidationException("Фильм " + film.getName() +

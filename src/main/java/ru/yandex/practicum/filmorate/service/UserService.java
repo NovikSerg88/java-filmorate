@@ -21,7 +21,6 @@ public class UserService {
         return id++;
     }
 
-
     public User createUser(User user) {
         if (users.containsKey(user.getId())) {
             throw new ValidationException("Пользователь с логином " + user.getLogin() +
