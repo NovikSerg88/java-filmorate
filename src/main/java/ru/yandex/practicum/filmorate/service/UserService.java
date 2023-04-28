@@ -4,8 +4,8 @@ import org.springframework.stereotype.Service;
 import ru.yandex.practicum.filmorate.exception.ValidationException;
 import ru.yandex.practicum.filmorate.model.User;
 
-import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -13,8 +13,8 @@ public class UserService {
     private int id = 1;
     private final Map<Integer, User> users = new HashMap<>();
 
-    public Collection<User> getAllUsers() {
-        return users.values();
+    public List<User> getAllUsers() {
+        return (List<User>) users.values();
     }
 
     private int setId() {
