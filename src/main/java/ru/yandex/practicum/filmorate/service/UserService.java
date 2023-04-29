@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import ru.yandex.practicum.filmorate.exception.ValidationException;
 import ru.yandex.practicum.filmorate.model.User;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,7 +15,11 @@ public class UserService {
     private final Map<Integer, User> users = new HashMap<>();
 
     public List<User> getAllUsers() {
-        return (List<User>) users.values();
+        List<User> allUsers = new ArrayList<>();
+        for (Map.Entry<Integer, User> user : users.entrySet()) {
+            allUsers.add(user.getValue());
+        }
+        return allUsers;
     }
 
     private int setId() {

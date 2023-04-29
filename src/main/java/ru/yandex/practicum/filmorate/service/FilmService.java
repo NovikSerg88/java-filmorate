@@ -3,7 +3,9 @@ package ru.yandex.practicum.filmorate.service;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.filmorate.exception.ValidationException;
 import ru.yandex.practicum.filmorate.model.Film;
+import ru.yandex.practicum.filmorate.model.User;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,7 +16,11 @@ public class FilmService {
     private final Map<Integer, Film> films = new HashMap<>();
 
     public List<Film> getAllFilms() {
-        return (List<Film>) films.values();
+        List<Film> allFilms = new ArrayList<>();
+        for (Map.Entry<Integer, Film> film : films.entrySet()) {
+            allFilms.add(film.getValue());
+        }
+        return allFilms;
     }
 
     private int setId() {
