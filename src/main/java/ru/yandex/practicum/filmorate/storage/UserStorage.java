@@ -8,11 +8,15 @@ import java.util.List;
 @Component
 public interface UserStorage {
 
-    int setId();
+    Long setId();
 
-    List<User> getAllUsers();
+    List<User> getUsers();
 
     User createUser(User user);
 
     User updateUser(User user);
+
+    User getUserById(Long id);
+
+
 }
