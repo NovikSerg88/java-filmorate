@@ -3,7 +3,6 @@ package ru.yandex.practicum.filmorate.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.filmorate.model.Film;
-import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.storage.FilmStorage;
 
 import java.util.List;
@@ -19,11 +18,11 @@ public class FilmService {
         this.filmStorage = filmStorage;
     }
 
-    public List<Film> getFilms () {
+    public List<Film> getFilms() {
         return filmStorage.getFilms();
     }
 
-    public Film getFilmById (Long id) {
+    public Film getFilmById(Long id) {
         return filmStorage.getFilmById(id);
     }
 
@@ -50,7 +49,7 @@ public class FilmService {
     public List<Film> getPopularFilms(Integer count) {
         return filmStorage.getFilms().stream().sorted((p0, p1) -> {
             int comp = p0.getCount().compareTo(p1.getCount());
-            return -1* comp;
+            return -1 * comp;
         }).limit(count).collect(Collectors.toList());
     }
 }
