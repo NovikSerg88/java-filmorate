@@ -9,7 +9,6 @@ import ru.yandex.practicum.filmorate.service.UserService;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Set;
 
 @Slf4j
 @RestController
@@ -71,5 +70,4 @@ public class UserController {
         log.info(String.format("Запрос на получение списка общих друзей пользователей %d, %d", id, otherId));
         return userService.getCommonFriends(id, otherId);
     }
-
 }
