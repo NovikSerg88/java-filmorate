@@ -2,6 +2,7 @@ package ru.yandex.practicum.filmorate.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.yandex.practicum.filmorate.exception.IncorrectParameterException;
 import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.storage.UserStorage;
 
@@ -43,6 +44,12 @@ public class UserService {
     }
 
     public User addToFriends(Long id, Long friendId) {
+        if (id <= 0) {
+            throw new IncorrectParameterException("id");
+        }
+        if (friendId <= 0) {
+            throw new IncorrectParameterException("friendId");
+        }
         userStorage.updateUser(userStorage.getUserById(id)).getFriends().add(friendId);
         userStorage.updateUser(userStorage.getUserById(friendId)).getFriends().add(id);
         return userStorage.getUserById(id);

@@ -3,7 +3,6 @@ package ru.yandex.practicum.filmorate.controller;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
-import ru.yandex.practicum.filmorate.exception.IncorrectParameterException;
 import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.service.FilmService;
 
@@ -43,24 +42,12 @@ public class FilmController {
     @PutMapping("/{id}/like/{userId}")
     public Film likeFilm(@Valid @PathVariable Long id, @PathVariable Long userId) {
         log.info(String.format("Пользователь %d поставил лайк фильму %d", userId, id));
-        if (id <= 0) {
-            throw new IncorrectParameterException("id");
-        }
-        if (userId <= 0) {
-            throw new IncorrectParameterException("friendId");
-        }
         return filmService.likeFilm(id, userId);
     }
 
     @DeleteMapping("/{id}/like/{userId}")
     public Film deleteFilm(@Valid @PathVariable Long id, @PathVariable Long userId) {
         log.info(String.format("Пользователь %d удалил лайк фильму %d", userId, id));
-        if (id <= 0) {
-            throw new IncorrectParameterException("id");
-        }
-        if (userId <= 0) {
-            throw new IncorrectParameterException("friendId");
-        }
         return filmService.unlikeFilm(id, userId);
     }
 

@@ -22,7 +22,7 @@ public class ErrorHandler {
     @ExceptionHandler
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ErrorResponse handleIncorrectParameterException(final IncorrectParameterException e) {
-        return new ErrorResponse(e.getMessage());
+        return new ErrorResponse(String.format("Ошибка с полем \"%s\".", e.getParameter()));
     }
 
     @ExceptionHandler

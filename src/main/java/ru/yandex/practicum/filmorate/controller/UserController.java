@@ -2,7 +2,6 @@ package ru.yandex.practicum.filmorate.controller;
 
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import ru.yandex.practicum.filmorate.exception.IncorrectParameterException;
 import ru.yandex.practicum.filmorate.model.User;
 import lombok.extern.slf4j.Slf4j;
 import ru.yandex.practicum.filmorate.service.UserService;
@@ -44,12 +43,6 @@ public class UserController {
     @PutMapping("/{id}/friends/{friendId}")
     public User addToFriends(@Valid @PathVariable Long id, @PathVariable Long friendId) {
         log.info(String.format("Запрос на добавление пользователя %d в друзья к пользователю %d", friendId, id));
-        if (id <= 0) {
-            throw new IncorrectParameterException("id");
-        }
-        if (friendId <= 0) {
-            throw new IncorrectParameterException("friendId");
-        }
         return userService.addToFriends(id, friendId);
     }
 
