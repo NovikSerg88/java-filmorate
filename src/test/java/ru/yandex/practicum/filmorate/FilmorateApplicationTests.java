@@ -5,6 +5,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.service.UserService;
+import ru.yandex.practicum.filmorate.storage.InMemoryUserStorage;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
@@ -18,13 +19,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
 class FilmorateApplicationTests {
-
-    private final UserService userService = new UserService();
+    private final InMemoryUserStorage inMemoryUserStorage = new InMemoryUserStorage();
+    private final UserService userService = new UserService(inMemoryUserStorage);
     private final Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
 
     private User getValidUser() {
         User user = new User();
-        user.setId(1);
+        user.setId(1L);
         user.setEmail("validEmail@yandex.ru");
         user.setLogin("validLogin");
         user.setName("ValidName");
@@ -34,7 +35,7 @@ class FilmorateApplicationTests {
 
     private Film getValidFilm() {
         Film film = new Film();
-        film.setId(1);
+        film.setId(1L);
         film.setName("ValidName");
         film.setName("ValidDescription");
         film.setReleaseDate(LocalDate.parse("1999-12-31"));
@@ -86,9 +87,7 @@ class FilmorateApplicationTests {
     @Test
     void createFilmWithInvalidDescription() {
         Film film = getValidFilm();
-        film.setDescription("qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq" +
-                "qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq" +
-                "qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq");
+        film.setDescription("a".repeat(201));
         Set<ConstraintViolation<Film>> violations = validator.validate(film);
         assertEquals(1, violations.size());
     }
