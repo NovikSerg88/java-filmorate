@@ -1,12 +1,12 @@
 # java-filmorate
 
-## Спринт SQL
+## Спринт № 11
 
 ### Промежуточное задание месяца SQL
 
 ![Схема базы данных приложения filmorate](src/main/assets/images/filmorate_db.png)
 
-**Примеры запросов:**
+<details>Примеры запросов:
 
 _Получение списка всех пользователей_
 
@@ -29,3 +29,4 @@ _Получение фильма по id_
 SELECT *
 FROM films
 WHERE film_id=1;
+  </details>
