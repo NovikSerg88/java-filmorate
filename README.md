@@ -4,6 +4,7 @@
 ![filmorate_db](src/main/assets/images/filmorate_db.png)
 
 <details><summary>Примеры запросов:</summary>  
+  
 1. _Получение списка всех пользователей:_  
 SELECT *  
 FROM users  
@@ -18,4 +19,5 @@ FROM films
 SELECT *  
 FROM films  
 WHERE film_id=1
+  
   </details>
