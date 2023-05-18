@@ -17,5 +17,5 @@ FROM films
 4. _Получение фильма по id =1:_  
 SELECT *  
 FROM films  
-WHERE film_id=1  
+WHERE film_id=1
   </details>
