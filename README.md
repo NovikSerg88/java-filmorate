@@ -9,8 +9,8 @@
 <details><summary>Примеры запросов:</summary>
 
 1. _Получение списка всех пользователей:_
-SELECT * "/n"
-FROM users /n
+SELECT *  
+FROM users  
 2. _Получение пользователя по id = 1:_
 SELECT *
 FROM users
