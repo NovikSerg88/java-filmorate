@@ -19,5 +19,12 @@ FROM films
 SELECT *  
 FROM films  
 WHERE film_id=1
+5. _Вывести название фильмов у которых жанр = "Ужасы"_  
+SELECT f.name,
+       g.genre_name
+FROM films AS f
+LEFT JOIN film_genres AS fg ON fg.film_id = f.film_id
+LEFT JOIN genres AS g on fg.genre_id = g.genre_id
+WHERE genre_name = 'Ужасы'
   
   </details>
