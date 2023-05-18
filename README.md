@@ -6,7 +6,7 @@
 
 ![Схема базы данных приложения filmorate](src/main/assets/images/filmorate_db.png)
 
-<details>Примеры запросов:
+<details><summary>Примеры запросов:</summary>
 
 _Получение списка всех пользователей_
 
