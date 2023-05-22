@@ -42,8 +42,7 @@ public class FilmService {
         if (userId <= 0) {
             throw new IncorrectParameterException("friendId");
         }
-        filmStorage.addLike(id);
-        filmStorage.getFilmById(id).getLikes().add(userId);
+        filmStorage.addLike(id, userId);
         return filmStorage.getFilmById(id);
     }
 
@@ -54,13 +53,12 @@ public class FilmService {
         if (userId <= 0) {
             throw new IncorrectParameterException("friendId");
         }
-        filmStorage.deleteLike(id);
-        filmStorage.getFilmById(id).getLikes().remove(userId);
+        filmStorage.deleteLike(id, userId);
         return filmStorage.getFilmById(id);
     }
 
     public List<Film> getPopularFilms(Integer count) {
-        return filmStorage.getFilms().stream().sorted((p0, p1) -> p1.getCount().compareTo(p0.getCount()))
+        return filmStorage.getFilms().stream().sorted((f1, f2) -> f2.getLikes().size() - f1.getLikes().size())
                 .limit(count)
                 .collect(Collectors.toList());
     }

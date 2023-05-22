@@ -21,17 +21,13 @@ public class InMemoryFilmStorage implements FilmStorage {
     }
 
     @Override
-    public void addLike(Long id) {
-        Long likes = films.get(id).getCount();
-        likes++;
-        films.get(id).setCount(likes);
+    public void addLike(Long id, Long userId) {
+        films.get(id).getLikes().add(userId);
     }
 
     @Override
-    public void deleteLike(Long id) {
-        Long likes = films.get(id).getCount();
-        likes--;
-        films.get(id).setCount(likes);
+    public void deleteLike(Long id, Long userId) {
+        films.get(id).getLikes().remove(userId);
     }
 
     @Override
