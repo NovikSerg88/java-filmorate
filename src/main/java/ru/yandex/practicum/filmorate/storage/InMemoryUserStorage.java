@@ -12,7 +12,6 @@ public class InMemoryUserStorage implements UserStorage {
     private Long id = 1L;
     private final Map<Long, User> users = new HashMap<>();
 
-
     @Override
     public Long setId() {
         return id++;
