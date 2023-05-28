@@ -24,7 +24,6 @@ public class Film {
     @Positive
     private int duration;
     private Set<Long> likes = new HashSet<>();
-    private Long count = 0L;
     private List<Genre> genres = new ArrayList<>();
     private RatingMPA rating;
 }

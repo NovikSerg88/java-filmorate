@@ -1,7 +1,7 @@
 # java-filmorate
 ## Спринт № 11
 ### Промежуточное задание месяца SQL
-![filmorate_db](src/main/assets/images/filmorate_db.png)
+![filmorate_db](src/main/resources/filmorate_db.png)
 
 <details><summary>Примеры запросов:</summary>    
   

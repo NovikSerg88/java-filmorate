@@ -1,76 +1,25 @@
 package ru.yandex.practicum.filmorate.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import ru.yandex.practicum.filmorate.exception.IncorrectParameterException;
 import ru.yandex.practicum.filmorate.model.User;
-import ru.yandex.practicum.filmorate.storage.UserStorage;
 
-import java.util.*;
+import java.util.List;
 
-@Service
-public class UserService {
 
-    private final UserStorage userStorage;
+public interface UserService {
 
-    @Autowired
-    public UserService(UserStorage userStorage) {
-        this.userStorage = userStorage;
-    }
+    List<User> getUsers();
 
-    public List<User> getUsers() {
-        return userStorage.getUsers();
-    }
+    User getUserById(Long id);
 
-    public User getUserById(Long id) {
-        return userStorage.getUserById(id);
-    }
+    User createUser(User user);
 
-    public User createUser(User user) {
-        return userStorage.createUser(user);
-    }
+    User updateUser(User user);
 
-    public User updateUser(User user) {
-        return userStorage.updateUser(user);
-    }
+    List<User> getFriends(Long id);
 
-    public List<User> getFriends(Long id) {
-        List<User> listOfFriends = new ArrayList<>();
-        Set<Long> friends = userStorage.getUserById(id).getFriends();
-        for (Long friendsId : friends) {
-            listOfFriends.add(userStorage.getUserById(friendsId));
-        }
-        return listOfFriends;
-    }
+    User addToFriends(Long id, Long friendId);
 
-    public User addToFriends(Long id, Long friendId) {
-        if (id <= 0) {
-            throw new IncorrectParameterException("id");
-        }
-        if (friendId <= 0) {
-            throw new IncorrectParameterException("friendId");
-        }
-        userStorage.updateUser(userStorage.getUserById(id)).getFriends().add(friendId);
-        userStorage.updateUser(userStorage.getUserById(friendId)).getFriends().add(id);
-        return userStorage.getUserById(id);
-    }
+    User deleteFromFriends(Long id, Long friendId);
 
-    public User deleteFromFriends(Long id, Long friendId) {
-        userStorage.updateUser(userStorage.getUserById(id)).getFriends().remove(friendId);
-        return userStorage.getUserById(id);
-    }
-
-    public List<User> getCommonFriends(Long id, Long otherId) {
-        List<User> commonFriends = new ArrayList<>();
-        Set<Long> userFriends = userStorage.getUserById(id).getFriends();
-        Set<Long> otherUserFriends = userStorage.getUserById(otherId).getFriends();
-        for (Long friendId : otherUserFriends) {
-            if (userFriends.contains(friendId)) {
-                commonFriends.add(userStorage.getUserById(friendId));
-            }
-        }
-        return commonFriends;
-    }
+    List<User> getCommonFriends(Long id, Long otherId);
 }
-
-

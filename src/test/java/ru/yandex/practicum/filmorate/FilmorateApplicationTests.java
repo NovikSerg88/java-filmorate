@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.model.User;
-import ru.yandex.practicum.filmorate.service.UserService;
+import ru.yandex.practicum.filmorate.service.InMemoryUserService;
 import ru.yandex.practicum.filmorate.storage.InMemoryUserStorage;
 
 import javax.validation.ConstraintViolation;
@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @SpringBootTest
 class FilmorateApplicationTests {
     private final InMemoryUserStorage inMemoryUserStorage = new InMemoryUserStorage();
-    private final UserService userService = new UserService(inMemoryUserStorage);
+    private final InMemoryUserService inMemoryUserService = new InMemoryUserService(inMemoryUserStorage);
     private final Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
 
     private User getValidUser() {
@@ -64,7 +64,7 @@ class FilmorateApplicationTests {
     void createUserWithInvalidName() {
         User user = getValidUser();
         user.setName("");
-        String newUserName = userService.createUser(user).getLogin();
+        String newUserName = inMemoryUserService.createUser(user).getLogin();
         assertEquals(user.getLogin(), newUserName);
     }
 

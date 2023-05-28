@@ -4,11 +4,10 @@ import org.springframework.stereotype.Component;
 import ru.yandex.practicum.filmorate.model.User;
 
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public interface UserStorage {
-
-    Long setId();
 
     List<User> getUsers();
 
