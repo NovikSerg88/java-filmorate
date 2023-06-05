@@ -1,6 +1,6 @@
 *.class
 *.log
-*.jar
+.jar
 *.war
 *.nar
 *.ear
@@ -28,6 +28,7 @@ target/
 *.iws
 *.iml
 *.ipr
+.DS_Store
 
 ### NetBeans ###
 /nbproject/private/
