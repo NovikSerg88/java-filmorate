@@ -57,12 +57,7 @@ public class UserDbStorage implements UserStorage {
                 user.getId());
         if (sqlRowSet.next()) {
             String sql = "UPDATE users SET login = ?, name = ?, email = ?, birthday = ? WHERE user_id = ?";
-            jdbcTemplate.update(sql
-                    , user.getLogin()
-                    , user.getName()
-                    , user.getEmail()
-                    , user.getBirthday()
-                    , user.getId());
+            jdbcTemplate.update(sql, user.getLogin(), user.getName(), user.getEmail(), user.getBirthday(), user.getId());
             return user;
         } else throw new UserNotFoundException("Пользователь не найден");
     }
@@ -89,8 +84,8 @@ public class UserDbStorage implements UserStorage {
         SqlRowSet sqlRowSet = jdbcTemplate.queryForRowSet("SELECT addressee_id FROM friendship " +
                 "WHERE requester_id = ?", id);
         while (sqlRowSet.next()) {
-            Long addressee_id = sqlRowSet.getLong("addressee_id");
-            friends.add(addressee_id);
+            Long addresseeId = sqlRowSet.getLong("addressee_id");
+            friends.add(addresseeId);
         }
         return friends;
     }
