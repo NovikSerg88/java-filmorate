@@ -4,8 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.filmorate.model.Film;
-import ru.yandex.practicum.filmorate.service.FilmDbService;
-import ru.yandex.practicum.filmorate.service.InMemoryFilmService;
+import ru.yandex.practicum.filmorate.service.db.FilmDbService;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -15,7 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @RequestMapping("/films")
 public class FilmController {
-//    private final InMemoryFilmService inMemoryFilmService;
+
     private final FilmDbService filmDbService;
 
     @GetMapping

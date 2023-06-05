@@ -1,22 +1,23 @@
-package ru.yandex.practicum.filmorate.service;
+package ru.yandex.practicum.filmorate.service.memory;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.filmorate.exception.IncorrectParameterException;
 import ru.yandex.practicum.filmorate.model.Film;
+import ru.yandex.practicum.filmorate.service.FilmService;
 import ru.yandex.practicum.filmorate.storage.FilmStorage;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class InMemoryFilmService implements FilmService{
+public class InMemoryFilmService implements FilmService {
 
     private final FilmStorage filmStorage;
 
     @Autowired
-    public InMemoryFilmService(@Qualifier("FilmDbStorage")FilmStorage filmStorage) {
+    public InMemoryFilmService(@Qualifier("FilmDbStorage") FilmStorage filmStorage) {
         this.filmStorage = filmStorage;
     }
 

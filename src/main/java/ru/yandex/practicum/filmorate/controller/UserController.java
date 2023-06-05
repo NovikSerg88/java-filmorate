@@ -4,8 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.filmorate.model.User;
 import lombok.extern.slf4j.Slf4j;
-import ru.yandex.practicum.filmorate.service.InMemoryUserService;
-import ru.yandex.practicum.filmorate.service.UserDbService;
+import ru.yandex.practicum.filmorate.service.db.UserDbService;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -16,15 +15,12 @@ import java.util.List;
 @RequestMapping("/users")
 public class UserController {
 
-    //    private final InMemoryUserService inMemoryUserService;
     private final UserDbService userDbService;
 
     @GetMapping
     public List<User> getUsers() {
         return userDbService.getUsers();
     }
-
-
 
     @GetMapping("/{id}")
     public User getUserById(@PathVariable("id") Long id) {
@@ -45,9 +41,9 @@ public class UserController {
     }
 
     @PutMapping("/{id}/friends/{friendId}")
-    public User addToFriends(@Valid @PathVariable Long id, @PathVariable Long friendId) {
+    public void addToFriends(@Valid @PathVariable Long id, @PathVariable Long friendId) {
         log.info(String.format("Запрос на добавление пользователя %d в друзья к пользователю %d", friendId, id));
-        return userDbService.addToFriends(id, friendId);
+        userDbService.addToFriends(id, friendId);
     }
 
     @DeleteMapping("/{id}/friends/{friendId}")
@@ -67,6 +63,4 @@ public class UserController {
         log.info(String.format("Запрос на получение списка общих друзей пользователей %d, %d", id, otherId));
         return userDbService.getCommonFriends(id, otherId);
     }
-
-
 }
