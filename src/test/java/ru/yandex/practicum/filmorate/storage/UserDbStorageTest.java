@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
+import ru.yandex.practicum.filmorate.exception.NotFoundException;
 import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.storage.db.UserDbStorage;
 
@@ -15,6 +16,7 @@ import java.util.Optional;
 import java.util.Set;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @AutoConfigureTestDatabase
@@ -34,6 +36,17 @@ public class UserDbStorageTest {
                 .hasValueSatisfying(user ->
                         assertThat(user).hasFieldOrPropertyWithValue("id", 1L)
                 );
+    }
+
+    @Test
+    public void testFindUnknownIdUser() {
+        User validUser = getValidUser1();
+        userDbStorage.createUser(validUser);
+        User invalidUser = new User();
+        NotFoundException thrown = assertThrows(NotFoundException.class,
+                () -> userDbStorage.getUserById(invalidUser.getId())
+        );
+        assertEquals("User not found", thrown.getMessage());
     }
 
     @Test
@@ -75,9 +88,9 @@ public class UserDbStorageTest {
         User validUser1 = userDbStorage.createUser(getValidUser1());
         User validUser2 = userDbStorage.createUser(getValidUser2());
 
-        userDbStorage.addFriends(validUser1.getId(), validUser2.getId());
+        userDbStorage.addFriend(validUser1.getId(), validUser2.getId());
 
-        Set<Long> friends = userDbStorage.getFriends(validUser1.getId());
+        Set<Long> friends = userDbStorage.getFriendsId(validUser1.getId());
         assertThat(friends)
                 .isNotEmpty()
                 .contains(validUser2.getId());
@@ -88,9 +101,9 @@ public class UserDbStorageTest {
         User validUser1 = userDbStorage.createUser(getValidUser1());
         User validUser2 = userDbStorage.createUser(getValidUser2());
 
-        userDbStorage.addFriends(validUser1.getId(), validUser2.getId());
+        userDbStorage.addFriend(validUser1.getId(), validUser2.getId());
 
-        Set<Long> friends = userDbStorage.getFriends(validUser1.getId());
+        Set<Long> friends = userDbStorage.getFriendsId(validUser1.getId());
         assertThat(friends)
                 .isNotEmpty()
                 .contains(validUser2.getId());
@@ -101,9 +114,9 @@ public class UserDbStorageTest {
         User validUser1 = userDbStorage.createUser(getValidUser1());
         User validUser2 = userDbStorage.createUser(getValidUser2());
 
-        userDbStorage.addFriends(validUser1.getId(), validUser2.getId());
-        userDbStorage.deleteFromFriends(validUser1.getId(), validUser2.getId());
-        Set<Long> friends = userDbStorage.getFriends(validUser1.getId());
+        userDbStorage.addFriend(validUser1.getId(), validUser2.getId());
+        userDbStorage.deleteFriend(validUser1.getId(), validUser2.getId());
+        Set<Long> friends = userDbStorage.getFriendsId(validUser1.getId());
         assertThat(friends)
                 .isEmpty();
     }

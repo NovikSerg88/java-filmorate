@@ -1,5 +1,6 @@
 package ru.yandex.practicum.filmorate.storage.db;
 
+import lombok.AllArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 import ru.yandex.practicum.filmorate.exception.NotFoundException;
@@ -11,13 +12,10 @@ import java.sql.SQLException;
 import java.util.List;
 
 @Component
+@AllArgsConstructor
 public class RatingDbStorage implements RatingStorage {
 
     private final JdbcTemplate jdbcTemplate;
-
-    public RatingDbStorage(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-    }
 
     private Rating ratingMapper(ResultSet rs) throws SQLException {
         Rating mpa = new Rating();

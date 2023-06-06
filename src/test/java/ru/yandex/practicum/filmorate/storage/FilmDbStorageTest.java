@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
+import ru.yandex.practicum.filmorate.exception.NotFoundException;
 import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.model.Rating;
 import ru.yandex.practicum.filmorate.model.User;
@@ -19,6 +20,8 @@ import java.util.Optional;
 import java.util.Set;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
 @AutoConfigureTestDatabase
@@ -40,6 +43,17 @@ public class FilmDbStorageTest {
                 .hasValueSatisfying(film ->
                         assertThat(film).hasFieldOrPropertyWithValue("id", 1L)
                 );
+    }
+
+    @Test
+    public void testFindUnknownIdFilm() {
+        Film validFilm = getValidFilm1();
+        filmDbStorage.addFilm(validFilm);
+        Film invalidFilm = new Film();
+        NotFoundException thrown = assertThrows(NotFoundException.class,
+                () -> filmDbStorage.getFilmById(invalidFilm.getId())
+        );
+        assertEquals("Film not found", thrown.getMessage());
     }
 
     @Test

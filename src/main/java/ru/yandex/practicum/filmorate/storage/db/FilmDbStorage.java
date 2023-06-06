@@ -1,5 +1,6 @@
 package ru.yandex.practicum.filmorate.storage.db;
 
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -22,12 +23,11 @@ import java.util.Objects;
 @Slf4j
 @Component
 @Qualifier("FilmDbStorage")
+@AllArgsConstructor
 public class FilmDbStorage implements FilmStorage {
     private final JdbcTemplate jdbcTemplate;
-
-    public FilmDbStorage(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-    }
+    private final GenreDbStorage genreDbStorage;
+    private final LikesDbStorage likesDbStorage;
 
     @Override
     public void addLike(Long id, Long userId) {
@@ -47,7 +47,7 @@ public class FilmDbStorage implements FilmStorage {
                 "FROM films AS f " +
                 "JOIN rating_MPA AS r ON f.rating_id=r.rating_id " +
                 "ORDER BY f.film_id";
-        return jdbcTemplate.query(sql, (rs, rowNum) -> new FilmMapper().mapRow(rs, rowNum));
+        return jdbcTemplate.query(sql, this::mapRowToFilm);
     }
 
     @Override
@@ -87,11 +87,11 @@ public class FilmDbStorage implements FilmStorage {
     public Film getFilmById(Long id) {
         String sql = "SELECT f.film_id, f.name, f.description, f.release_date, f.duration, f.rating_id, r.rating_name" +
                 " FROM films AS f JOIN rating_MPA AS r ON f.rating_id=r.rating_id WHERE film_id = ?";
-        return jdbcTemplate.query(sql, (rs, rowNum) -> mapFilm(rs), id)
+        return jdbcTemplate.query(sql, (rs, rowNum) -> new FilmMapper().mapRow(rs, rowNum), id)
                 .stream().findAny().orElseThrow(() -> new NotFoundException("Film not found"));
     }
 
-    private Film mapFilm(ResultSet rs) throws SQLException {
+    private Film mapRowToFilm(ResultSet rs, int rowNum) throws SQLException {
         Film film = new Film();
         film.setId(rs.getLong("film_id"));
         film.setName(rs.getString("name"));
@@ -99,6 +99,8 @@ public class FilmDbStorage implements FilmStorage {
         film.setReleaseDate(rs.getDate("release_date").toLocalDate());
         film.setDuration(rs.getInt("duration"));
         film.setMpa(new Rating(rs.getInt("rating_id"), rs.getString("rating_name")));
+        film.setLikes(likesDbStorage.getLikes(film.getId()));
+        film.setGenres(genreDbStorage.getFilmGenres(film.getId()));
         return film;
     }
 }
