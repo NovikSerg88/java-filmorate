@@ -12,11 +12,11 @@ import java.util.Set;
 @Data
 public class User {
     private Long id;
-    @Email
-    private String email;
     @NotBlank
     private String login;
     private String name;
+    @Email
+    private String email;
     @Past
     private LocalDate birthday;
     private Set<Long> friends = new HashSet<>();

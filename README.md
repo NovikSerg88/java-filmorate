@@ -1,7 +1,7 @@
 # java-filmorate
 ## Спринт № 11
 ### Промежуточное задание месяца SQL
-![filmorate_db](src/main/assets/images/filmorate_db.png)
+![filmorate_db](src/main/resources/filmorate_db.png)
 
 <details><summary>Примеры запросов:</summary>    
   
@@ -28,3 +28,10 @@ LEFT JOIN genres AS g on fg.genre_id = g.genre_id
 WHERE genre_name = 'Ужасы'  
   
   </details>
+
+## Спринт № 11
+### Техническое задание проекта №11
+
+Схема подтверждения дружбы упрощена с целью соответствия ТЗ  
+
+

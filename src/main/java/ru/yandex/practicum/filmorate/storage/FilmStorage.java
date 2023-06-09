@@ -8,11 +8,9 @@ import java.util.List;
 @Component
 public interface FilmStorage {
 
-    Long setId();
+    void addLike(Long id, Long userId);
 
-    void addLike(Long id);
-
-    void deleteLike(Long id);
+    void deleteLike(Long id, Long userId);
 
     List<Film> getFilms();
 
